@@ -12,23 +12,28 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
 
-    - name: Copy Files to Server
+    # --- Copy Code ---
+    - name: Upload Files to Server
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASS }}
-        source: "."
-        target: "/home/rashmik.parmar/app"
+        port: 22
+        source: "./*"
+        target: "/home/rashmik.parmar/www/PHP-GithubAction-CICD/laravel-app"
+        overwrite: true
 
-    - name: SSH Deploy & Restart Containers
+    # --- SSH Docker Deploy ---
+    - name: Deploy & Restart Docker
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASS }}
+        port: 22
         script: |
-          cd /home/rashmik.parmar/app
-          git pull origin main || true
-          docker-compose down || true
-          docker-compose up -d --build
+          cd /home/rashmik.parmar/www/PHP-GithubAction-CICD/laravel-app
+          sudo docker-compose down || true
+          sudo docker-compose up -d --build
+          sudo docker ps
