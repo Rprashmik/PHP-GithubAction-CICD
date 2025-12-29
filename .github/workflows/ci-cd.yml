@@ -1,18 +1,18 @@
-name: CI/CD Deploy Laravel (Local Server)
+name: CI/CD Deploy Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Pull Latest Code
+    - name: Checkout Repo
       uses: actions/checkout@v3
 
-    - name: Copy Code to Server
+    - name: Copy Files to Server
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_IP }}
@@ -21,7 +21,7 @@ jobs:
         source: "."
         target: "/home/rashmik.parmar/app"
 
-    - name: SSH Deploy & Start Containers
+    - name: SSH Deploy & Restart Containers
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_IP }}
@@ -32,4 +32,3 @@ jobs:
           git pull origin main || true
           docker-compose down || true
           docker-compose up -d --build
-          docker system prune -f
