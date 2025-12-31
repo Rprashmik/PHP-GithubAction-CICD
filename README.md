@@ -1,6 +1,12 @@
 <h1 align="center">🚀 PHP Laravel DevOps Deployment</h1>
 <h3 align="center">AWS EC2 • Docker • Nginx • GitHub Actions CI/CD Pipeline</h3>
 
+
+# 🚀 PHP Laravel DevOps Deployment
+### AWS EC2 • Docker • Nginx • GitHub Actions CI/CD Pipeline
+
+
+
 ---
 
 ## 📌 Project Overview
